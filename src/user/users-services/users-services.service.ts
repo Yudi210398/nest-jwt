@@ -18,8 +18,8 @@ export class UsersServicesService {
     return data;
   }
 
-  async getDataEmail(username: string) {
-    const data = this.dataUser.findOne({ email: username });
+  async getDataEmail(email: string) {
+    const data = this.dataUser.findOne({ email });
     if (!data) throw new HttpException('Data tidak ada', HttpStatus.NOT_FOUND);
 
     return data;

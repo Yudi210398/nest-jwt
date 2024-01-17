@@ -1,6 +1,8 @@
 import { IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class RegisterDataDto {
+  _id?: string;
+
   @IsNotEmpty({ message: 'Tidak Boleh kosongs' })
   nama: string;
 

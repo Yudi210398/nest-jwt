@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -9,6 +10,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { SerivicesService } from 'src/auth/services/serivices/serivices.service';
 import { RegisterDataDto } from 'src/dto/register.dto';
+import { Request } from 'express';
 
 @Controller('auth')
 export class ControllersController {
@@ -22,8 +24,7 @@ export class ControllersController {
 
   @Post('login')
   @UseGuards(AuthGuard('local'))
-  login(@Body() username: string, password: string) {
-    const data = this.personService.validateUser(username, password);
-    return data;
+  login(@Req() req: Request) {
+    return this.personService.login(req.user);
   }
 }

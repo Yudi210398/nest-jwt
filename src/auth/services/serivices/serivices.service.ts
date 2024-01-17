@@ -15,14 +15,13 @@ export class SerivicesService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string) {
-    console.log(`cak cak`);
-    const user = await this.userService.getDataEmail(username);
-    console.log(`kocak bet`, user);
+  async validateUser(email: string, password: string) {
+    const user = await this.userService.getDataEmail(email);
+
     if (user && (await bcrypt.compare(password, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...users } = user;
-      return this.jwtService.sign({ id: user.umur });
+
+      return await user;
     }
 
     return null;
@@ -36,5 +35,17 @@ export class SerivicesService {
       password: await bcrypt.hash(password, 10),
     });
     return await data.save();
+  }
+
+  async login(user) {
+    const payload = {
+      email: user.email,
+      nama: user.nama,
+      id: user?._id,
+    };
+
+    return {
+      token: this.jwtService.sign(payload),
+    };
   }
 }
