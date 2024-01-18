@@ -25,6 +25,7 @@ export class ControllersController {
   @Post('login')
   @UseGuards(AuthGuard('local'))
   login(@Req() req: Request) {
+    console.log(req.user['nama']);
     return this.personService.login(req.user);
   }
 }
