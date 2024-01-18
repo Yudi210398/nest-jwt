@@ -1,16 +1,18 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { SerivicesService } from 'src/auth/services/serivices/serivices.service';
 import { RegisterDataDto } from 'src/dto/register.dto';
 import { Request } from 'express';
+import { LocalGuard } from 'src/auth/guards/local.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('auth')
 export class ControllersController {
@@ -23,9 +25,16 @@ export class ControllersController {
   }
 
   @Post('login')
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalGuard)
   login(@Req() req: Request) {
-    console.log(req.user['nama']);
+    console.log(req.user['nama'], req.headers.authorization);
     return this.personService.login(req.user);
+  }
+
+  @Get('data')
+  @UseGuards(JwtAuthGuard)
+  dataGet(@Req() req: Request) {
+    console.log(req.user, `cak`);
+    return req.user;
   }
 }
