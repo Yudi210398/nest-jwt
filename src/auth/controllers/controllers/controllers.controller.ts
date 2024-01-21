@@ -27,14 +27,17 @@ export class ControllersController {
   @Post('login')
   @UseGuards(LocalGuard)
   login(@Req() req: Request) {
-    console.log(req.user['nama'], req.headers.authorization);
     return this.personService.login(req.user);
   }
 
   @Get('data')
   @UseGuards(JwtAuthGuard)
-  dataGet(@Req() req: Request) {
-    console.log(req.user, `cak`);
-    return req.user;
+  dataGetId(@Req() req: Request) {
+    return this.personService.getDataid(req.user['id']);
+  }
+
+  @Post('refresh')
+  refreshToken(@Body() userid: string) {
+    return this.personService.refreshToken(userid['userid']);
   }
 }

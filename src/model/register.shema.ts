@@ -13,6 +13,9 @@ export class RegisterData {
 
   @Prop({ required: true })
   password: string;
+
+  @Prop()
+  refreshToken: string;
 }
 
 export const RegisterSchema = SchemaFactory.createForClass(RegisterData);
