@@ -32,7 +32,6 @@ export class SerivicesService {
 
       return await user;
     }
-
     return null;
   }
 
